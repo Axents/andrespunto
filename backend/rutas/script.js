@@ -40,32 +40,27 @@ async function submitForm(event) {
     }
 }
 async function actualizarUsuario(userId) {
-    // Verifica si el usuario tiene el rol de administrador
     const userRole = localStorage.getItem('userRole');
     if (userRole !== 'admin') {
-        alert('Permiso denegado. Solo los administradores pueden actualizar usuarios.');
+        alert('solo los admin tienen permiso');
         return;
     }
 
-    // Solicita nuevos datos para el usuario
-    const nuevoNombre = prompt('Nuevo nombre del usuario (deja en blanco para no cambiar):')?.trim();
-    const nuevoEmail = prompt('Nuevo email del usuario (deja en blanco para no cambiar):')?.trim();
-    const nuevoRoleId = prompt('Nuevo ID del rol (deja en blanco para no cambiar):')?.trim();
+    const nuevoNombre = prompt('nuevo nombre')?.trim();
+    const nuevoEmail = prompt('nuevo email')?.trim();
+    const nuevoRoleId = prompt('Nuevo id')?.trim();
 
-    // Verifica si hay cambios que realizar
     if (!nuevoNombre && !nuevoEmail && !nuevoRoleId) {
-        alert('No hay cambios que realizar.');
+        alert('no hay cambios');
         return;
     }
 
-    // Construye el cuerpo de la solicitud con solo los valores proporcionados
     const requestBody = { userRole };
     if (nuevoNombre) requestBody.nombre = nuevoNombre;
     if (nuevoEmail) requestBody.email = nuevoEmail;
     if (nuevoRoleId) requestBody.role_id = nuevoRoleId;
 
     try {
-        // Realiza la solicitud PUT al servidor
         const response = await fetch(`http://localhost:3000/api/usuarios/${userId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -74,14 +69,13 @@ async function actualizarUsuario(userId) {
 
         const data = await response.json();
 
-        // Muestra el mensaje del servidor y recarga la lista de usuarios
         alert(data.message);
         if (response.ok) {
             cargarUsuarios();
         }
     } catch (error) {
-        console.error('Error al actualizar el usuario:', error);
-        alert('Ocurrió un error al intentar actualizar el usuario.');
+        console.error('rror al actualizar el usuario', error);
+        alert(' error al intentar actualizar el usuario.');
     }
 }
 
@@ -112,9 +106,9 @@ async function cargarUsuarios() {
     }
 }
 function openEditModal(userId, currentName, currentEmail) {
-    const nuevoNombre = prompt(`Nombre actual: ${currentName}\nIntroduce el nuevo nombre del usuario (o déjalo en blanco):`);
-    const nuevoEmail = prompt(`Email actual: ${currentEmail}\nIntroduce el nuevo email del usuario (o déjalo en blanco):`);
-    const nuevoRoleId = prompt('Introduce el nuevo rol ID (o déjalo en blanco):');
+    const nuevoNombre = prompt(`Nombre actual: ${currentName}\nnuevo usurio`);
+    const nuevoEmail = prompt(`Email actual: ${currentEmail}\nnuevo email`);
+    const nuevoRoleId = prompt('nuevo rol');
 
     if (!nuevoNombre && !nuevoEmail && !nuevoRoleId) {
         alert('No se han realizado cambios.');
@@ -129,7 +123,7 @@ async function eliminarUsuario(userId) {
     const userRole = localStorage.getItem('userRole');
 
     if (userRole !== 'admin') {
-        alert('Permiso denegado. Solo los administradores pueden eliminar usuarios.');
+        alert('solo admin');
         return;
     }
 
