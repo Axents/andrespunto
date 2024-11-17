@@ -1,0 +1,13 @@
+
+                            Venta id: 72
+                            Fecha: 2024-11-16 21:14:39
+                            Mtodo de Pago: efectivo
+                            Subtotal: $305.00
+                            Impuestos: $48.80
+                            Total: $353.80
+                            Cambio: $146.20
+                            
+                            Detalle de productos:
+                            cigarros | 5 | $45.00 = $225.00
+coca | 4 | $20.00 = $80.00
+                            

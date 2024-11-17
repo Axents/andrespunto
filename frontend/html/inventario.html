@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Punto de Venta</title>
+    <link rel="stylesheet" href="/frontend/css/inventario.css">
+</head>
+<body>
+    <header class="h">
+        <h1>Inventario</h1>
+        <nav>
+            <button class="regresar" onclick="location.href='ventas.html'">Volver a Ventas</button>
+        </nav>
+    </header>
+    <main>
+        <div class="inventarioC">
+            <h2>Gestión de Inventario</h2>
+            <button class="bA" onclick="location.href='nuevo-producto.html'">Agregar Nuevo Producto</button>
+            <table class="iT">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productos-lista">
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="/backend/rutas/inventario.js"></script>
+    
+</body>
+</html>
+

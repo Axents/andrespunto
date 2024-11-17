@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" href="/frontend/css/clientes.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Clientes</h1>
+    </header>
+    <div class="clC">
+        <h2>Registrar Nuevo Cliente</h2>
+        <div class="form-group">
+            <label for="nombreCliente">Nombre:</label>
+            <input type="text" id="nombreCliente" name="nombreCliente">
+        </div>
+        <div class="form-group">
+            <label for="telefonoCliente">Teléfono:</label>
+            <input type="text" id="telefonoCliente" name="telefonoCliente">
+        </div>
+        <div class="form-group">
+            <label for="emailCliente">Email:</label>
+            <input type="email" id="emailCliente" name="emailCliente">
+        </div>
+        <button onclick="guardarCliente()">Guardar Cliente</button>
+    </div>
+
+    <script>
+        function guardarCliente() {
+            alert("Cliente guardado correctamente");
+        }
+    </script>
+</body>
+</html>

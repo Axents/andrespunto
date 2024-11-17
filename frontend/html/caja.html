@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja</title>
+    <link rel="stylesheet" href="/frontend/css/caja.css">
+</head>
+<body>
+    <header>
+        <h1>CAJA</h1>
+    </header>
+
+   
+    <section class="inicio-caja">
+        <h2>Inicio de Caja</h2>
+        <div class="fo">
+            <label for="montoInicial">cuanto inicias</label>
+            <input type="number" id="montoInicial" name="montoInicial" onchange="iniciarCaja()">
+        </div>
+        <button onclick="iniciarCaja()">iniciar caja</button>
+    </section>
+
+    
+    <section class="corte-caja">
+        <h2>Corte de Caja</h2>
+        <div class="fo">
+            <label for="fecha">Fecha del Corte:</label>
+            <input type="date" id="fecha" name="fecha">
+        </div>
+        <div class="fo">
+            <label for="ventasTotales">VentasF:</label>
+            <input type="number" id="ventasTotales" name="ventasTotales" onchange="calcularTotales()">
+        </div>
+        <div class="fo">
+            <label for="gastos">Gastos:</label>
+            <input type="number" id="gastos" name="gastos" onchange="calcularTotales()">
+        </div>
+        <div class="su">
+            <h3>totales</h3>
+            <p>Total Efectivo: $<span id="totalEfectivo">0.00</span></p>
+            <p>Total Tarjeta: $<span id="totalTarjeta">0.00</span></p>
+            <p>Diferencia: $<span id="diferencia">0.00</span></p>
+        </div>
+        <button onclick="realizarCorte()">hacer Corte</button>
+    </section>
+
+    
+    <section class="registros">
+        <h2>Registros del dia </h2>
+        <table>
+            
+            <tbody id="tablaRegistros">
+            </tbody>
+        </table>
+        <button onclick="agregarRegistro()">Agregar Registro</button>
+    </section>
+
+    <script src="/backend/rutas/caja.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - Punto de Venta</title>
+    <link rel="stylesheet" href="/frontend/css/usuarios.css">
+</head>
+<body>
+    <header>
+        <h1>Administración de Usuarios</h1>
+        <nav>
+            <button onclick="location.href='ventas.html'">Volver a Ventas</button>
+        </nav>
+    </header>
+    <main>
+        <div class="usuarios-container">
+            <h2>Lista de Usuarios</h2>
+            <button id="addUserBtn" onclick="location.href='nuevo-usuario.html'">Agregar Nuevo Usuario</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                </tbody>
+            </table>
+        </div>
+        <div id="editUserModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditModal()">&times;</span>
+                <h2>Editar Usuario</h2>
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div>
+                        <label for="editUserName">Nombre:</label>
+                        <input type="text" id="editUserName" required>
+                    </div>
+                    <div>
+                        <label for="editUserEmail">Email:</label>
+                        <input type="email" id="editUserEmail" required>
+                    </div>
+                    <button type="submit">Actualizar Usuario</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="/backend/rutas/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userRole = localStorage.getItem('userRole');
+
+            if (userRole !== 'admin') {
+                document.getElementById('addUserBtn').style.display = 'none';
+            }
+
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                if (userRole !== 'admin') {
+                    button.style.display = 'none';
+                }
+            });
+        });
+
+        function openEditModal(userId, userName, userEmail) {
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUserName').value = userName;
+            document.getElementById('editUserEmail').value = userEmail;
+            document.getElementById('editUserModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editUserModal').style.display = 'none';
+        }
+
+        async function submitEditForm(event) {
+            event.preventDefault();
+            const userId = document.getElementById('editUserId').value;
+            const userName = document.getElementById('editUserName').value;
+            const userEmail = document.getElementById('editUserEmail').value;
+            const userRole = localStorage.getItem('userRole');
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/usuarios/${userId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre: userName, email: userEmail, userRole })
+                });
+
+                const data = await response.json();
+                alert(data.message);
+                if (response.ok) {
+                    closeEditModal();
+                    cargarUsuarios();
+                }
+            } catch (error) {
+                console.error('Error al actualizar el usuario:', error);
+            }
+        }
+
+        document.getElementById('editUserForm').addEventListener('submit', submitEditForm);
+    </script>
+</body>
+</html>
