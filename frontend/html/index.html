@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio del Punto de Venta</title>
+    <link rel="stylesheet" href="/frontend/css/style.css">
+</head>
+<body>
+    <div class="completo">
+        <div class="espL">
+            <img src="l.png" alt="Logo de Punto de Venta">
+            <h1>El punto</h1>
+            <p>Punto en linea</p>
+        </div>
+        <div class="f">
+            <div class="avatar">
+                <img src="nono.jpg" alt="Avatar de Usuario">
+            </div>
+            <h2 id="form-title">Inicio</h2>
+            <p id="form-message"></p>
+            
+            <form id="authForm" onsubmit="submitForm(event)">
+                <div class="igrupo">
+                    <label for="nombre">Usuario</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="igrupo">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="igrupo" id="email-group" style="display: none;">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <button type="submit" class="botonI" id="authButton">Ingresar</button>
+            </form>
+            <p id="message"></p>
+            <button onclick="detras()" class="botonS">Registrar Administrador</button>
+        </div>
+    </div>
+    <script src="/backend/rutas/script.js"></script>
+</body>
+</html>

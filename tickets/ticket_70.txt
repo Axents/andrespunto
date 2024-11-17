@@ -1,0 +1,12 @@
+
+                            Venta id: 70
+                            Fecha: 2024-11-16 21:09:47
+                            Mtodo de Pago: efectivo
+                            Subtotal: $100.00
+                            Impuestos: $16.00
+                            Total: $116.00
+                            Cambio: $84.00
+                            
+                            Detalle de productos:
+                            coca | 5 | $20.00 = $100.00
+                            

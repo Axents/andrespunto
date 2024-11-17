@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cobro</title>
+    <link rel="stylesheet" href="/frontend/css/cobro.css">
+</head>
+<body>
+    <header>
+        <h1>Realizar Cobro</h1>
+    </header>
+    <div class="cobro-container">
+        <h2>Detalles del Cobro</h2>
+        <div class="form-group">
+            <label for="montoCobro">Monto a Cobrar:</label>
+            <input type="number" id="montoCobro" name="montoCobro">
+        </div>
+        <div class="form-group">
+            <label for="metodoPago">Método de Pago:</label>
+            <select id="metodoPago" name="metodoPago">
+                <option value="efectivo">Efectivo</option>
+                <option value="tarjeta">Tarjeta</option>
+            </select>
+        </div>
+        <button onclick="procesarCobro()">Procesar Cobro</button>
+    </div>
+
+    <script>
+        function procesarCobro() {
+            alert("Cobro procesado correctamente");
+        }
+    </script>
+</body>
+</html>

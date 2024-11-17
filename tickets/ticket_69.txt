@@ -1,0 +1,12 @@
+
+                            Venta ID: 69
+                            Fecha: 2024-11-16 18:55:38
+                            Método de Pago: efectivo
+                            Subtotal: $12.00
+                            Impuestos: $1.92
+                            Total: $13.92
+                            Cambio: $36.08
+                            
+                            Detalle de productos:
+                            lechenido | 1 | $12.00 = $12.00
+                            

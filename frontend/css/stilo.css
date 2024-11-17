@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f4f8;
+    color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+}
+
+.logo h1 {
+    font-size: 1.5em;
+}
+
+.menu button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 1em;
+}
+
+.menu button:hover {
+    background-color: #0056b3;
+    border-radius: 5px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info p {
+    margin-right: 10px;
+}
+
+.logout {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background 0.3s;
+}
+
+.logout:hover {
+    background-color: #d13b3b;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+.venta {
+    flex: 3;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.venta-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.venta-header input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.venta-header .add-product {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.venta-header .add-product:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+.totales {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.totales-info p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.totales-info input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+.btn-cobrar {
+    padding: 15px;
+    font-size: 1.2em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-cobrar:hover {
+    background-color: #218838;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: white;
+}
+
+footer button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s;
+}
+
+footer button:hover {
+    background-color: #0056b3;
+    border-radius: 5px;
+}

@@ -1,0 +1,159 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #222;
+    color: #ddd;
+    margin: 0;
+}
+
+.Cprincipal {
+    display: flex;
+    height: 100vh;
+}
+
+.s {
+    background-color: #110101;
+    padding: 20px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; 
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.s button {
+    background-color: #2b2e2a;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.s button:hover {
+    background-color: #291616;
+}
+
+.Cventas {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 20px;
+}
+
+.venta-form {
+    background-color: #222;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    color: #f1eded;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.fGru {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: #f5f2f2;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #f7f4f4;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background-color: #e5dcdc;
+    color: #fff;
+}
+
+.primerB {
+    width: 100%;
+    padding: 14px;
+    background-color: #211212;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primerB:hover {
+    background-color: #612e2e;
+}
+
+.tablaProductos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tablaProductos th, .tablaProductos td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: center;
+}
+
+.tablaProductos th {
+    background-color: #333;
+    color: #fff;
+}
+
+.totales p {
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 18px;
+    color: #ede7e7;
+}
+
+.metodoPago {
+    margin-top: 25px;
+}
+
+.metodoPago input,
+.metodoPago select {
+    font-size: 16px;
+    width: 100%;
+}
+
+.imagenProductosC {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.imagenProducto {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.detalleVenta {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cambio {
+    font-size: 18px;
+    color: #4cff9a;
+    margin-top: 10px;
+}

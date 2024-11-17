@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f6f9;
+}
+
+.completo {
+    display: flex;
+    width: 80%;
+    max-width: 900px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.espL {
+    flex: 1;
+    background-color: #ec0b0b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.espL img {
+    width: 150px;
+    margin-bottom: 15px;
+}
+
+.espL h1 {
+    font-size: 1.8em;
+    color: #0e100f;
+}
+
+.espL p {
+    color: #131313;
+    font-size: 1.1em;
+}
+
+.f {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #100e0e;
+    
+}
+
+.avatar img {
+    width: 80px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+}
+
+.f h2 {
+    font-size: 2em;
+    color: #ffffff;
+}
+
+.f p {
+    color: #f8f6f6;
+    margin-bottom: 20px;
+}
+
+.igrupo {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.igrupo label {
+    font-size: 0.9em;
+    color: hsl(0, 37%, 97%);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.igrupo input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.igrupo input:focus {
+    border-color: #eaefef;
+    outline: none;
+}
+
+.botonI {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #00796b, #004d40);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-transform: uppercase;
+}
+
+.botonI:hover {
+    background: linear-gradient(90deg, #004d40, #00796b);
+}
+
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .logo-section, .form-section {
+        width: 100%;
+    }
+
+    .logo-section {
+        padding: 40px;
+    }
+}
+
+.botonS {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f0f0f0;
+    color: #00796b;
+    border: 1px solid #ebe7e7;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.botonS:hover {
+    background: #00796b;
+    color: #ffffff;
+}

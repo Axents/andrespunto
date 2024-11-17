@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Ventas</title>
+    <link rel="stylesheet" href="/frontend/css/reportes.css">
+</head>
+<body>
+    <header>
+        <h1>Reportes de Ventas</h1>
+    </header>
+    <div class="contenedor-reportes">
+        <h2>Generar Reporte</h2>
+        
+        <div class="formulario-fechas">
+            <label for="fechaInicio">Fecha de inicio:</label>
+            <input type="date" id="fechaInicio" required>
+            
+            <label for="fechaFin">Fecha de fin:</label>
+            <input type="date" id="fechaFin" required>
+        
+            <button id="btnObtenerVentas">Obtener Reporte de Ventas</button>
+        </div>
+
+        <table id="tablaReporteVentas">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div id="contenedorTotal">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btnObtenerVentas').addEventListener('click', async () => {
+    const fechaInicio = document.getElementById('fechaInicio').value;
+    const fechaFin = document.getElementById('fechaFin').value;
+
+    if (fechaInicio && fechaFin) {
+        try {
+            const respuesta = await fetch(`http://127.0.0.1:3000/api/ventas-por-periodo?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+            const datos = await respuesta.json();
+
+            console.log(datos);
+
+            if (datos && Array.isArray(datos.ventas) && datos.ventas.length > 0) {
+                const tabla = document.getElementById('tablaReporteVentas').getElementsByTagName('tbody')[0];
+                tabla.innerHTML = ''; 
+                datos.ventas.forEach(venta => {
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${venta.fecha}</td>
+                        <td>${venta.producto}</td>
+                        <td>${venta.cantidad}</td>
+                        <td>${venta.precio}</td>
+                        <td>${(venta.cantidad * venta.precio).toFixed(2)}</td>
+                    `;
+                    tabla.appendChild(fila);
+                });
+
+                const contenedorTotal = document.getElementById('contenedorTotal');
+                contenedorTotal.innerHTML = `<h3>Total General: $${datos.total_general.toFixed(2)}</h3>`;
+            } else {
+                alert('No se encontraron ventas para este rango de fechas.');
+            }
+        } catch (error) {
+            console.error('Error al obtener los datos:', error);
+            alert('Hubo un error al obtener los datos del servidor.');
+        }
+    } else {
+        alert('Por favor ingrese un rango de fechas válido');
+    }
+});
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Producto - Punto de Venta</title>
+    <link rel="stylesheet" href="/frontend/css/productos.css">
+</head>
+<body>
+    <header>
+        <h1>Registrar Nuevo Producto</h1>
+        <nav>
+            <button onclick="location.href='inventario.html'">Volver al Inventario</button>
+        </nav>
+    </header>
+    <main class="pC">
+        <h2>Registrar Nuevo Producto</h2>
+        <form onsubmit="guardarProducto(event)">
+            <div class="f">
+                <label for="codigoProducto">Código del Producto:</label>
+                <input type="text" id="codigoProducto" name="codigoProducto" required>
+            </div>
+            <div class="f">
+                <label for="nombreProducto">Nombre del Producto:</label>
+                <input type="text" id="nombreProducto" name="nombreProducto" required>
+            </div>
+            <div class="f">
+                <label for="precioProducto">Precio:</label>
+                <input type="number" id="precioProducto" name="precioProducto" step="0.01" required>
+            </div>
+            <div class="f">
+                <label for="cantidadProducto">Cantidad en Stock:</label>
+                <input type="number" id="cantidadProducto" name="cantidadProducto" required>
+            </div>
+            <button type="submit">Guardar Producto</button>
+        </form>
+    </main>
+    
+    <script src="/backend/rutas/productos.js"></script>
+</body>
+</html>

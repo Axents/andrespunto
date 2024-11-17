@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración</title>
+    <link rel="stylesheet" href="/frontend/css/configuracion.css">
+</head>
+<body>
+    <header>
+        <h1>Configuración del Sistema</h1>
+    </header>
+    <div class="confiC">
+        <h2>Configuración General</h2>
+        <div class="fg">
+            <label for="nombreEmpresa">Nombre de la Empresa:</label>
+            <input type="text" id="nombreEmpresa" name="nombreEmpresa">
+        </div>
+        <div class="fg">
+            <label for="direccionEmpresa">Dirección de la Empresa:</label>
+            <input type="text" id="direccionEmpresa" name="direccionEmpresa">
+        </div>
+        <div class="fg">
+            <label for="telefonoEmpresa">Teléfono de la Empresa:</label>
+            <input type="text" id="telefonoEmpresa" name="telefonoEmpresa">
+        </div>
+        <div class="fg">
+            <label for="emailEmpresa">Email de la Empresa:</label>
+            <input type="email" id="emailEmpresa" name="emailEmpresa">
+        </div>
+        <button onclick="guardarConfiguracion()">Guardar Configuración</button>
+    </div>
+
+    <script>
+        function guardarConfiguracion() {
+            const configuracion = {
+                nombreEmpresa: document.getElementById('nombreEmpresa').value,
+                direccionEmpresa: document.getElementById('direccionEmpresa').value,
+                telefonoEmpresa: document.getElementById('telefonoEmpresa').value,
+                emailEmpresa: document.getElementById('emailEmpresa').value,
+            };
+
+            localStorage.setItem('configuracion', JSON.stringify(configuracion));
+
+            alert("Configuración guardada correctamente");
+        }
+    </script>
+</body>
+</html>

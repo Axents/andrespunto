@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+}
+
+header {
+    background-color: #e67e22;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+.inventario-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px; 
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%; 
+    padding: 10px;
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #d35400;
+}
+
+#mensaje {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center; 
+}

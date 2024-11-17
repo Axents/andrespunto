@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/frontend/css/productos.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Productos</h1>
+    </header>
+    <div class="productos-container">
+        <h2>Registrar Nuevo Producto</h2>
+        <div class="form-group">
+            <label for="codigoProducto">Código del Producto:</label>
+            <input type="text" id="codigoProducto" name="codigoProducto">
+        </div>
+        <div class="form-group">
+            <label for="nombreProducto">Nombre del Producto:</label>
+            <input type="text" id="nombreProducto" name="nombreProducto">
+        </div>
+        <div class="form-group">
+            <label for="precioProducto">Precio:</label>
+            <input type="number" id="precioProducto" name="precioProducto">
+        </div>
+        <div class="form-group">
+            <label for="cantidadProducto">Cantidad en Stock:</label>
+            <input type="number" id="cantidadProducto" name="cantidadProducto">
+        </div>
+        <button onclick="guardarProducto()">Guardar Producto</button>
+    </div>
+
+    <script>
+        function guardarProducto() {
+            alert("Producto guardado correctamente");
+        }
+    </script>
+</body>
+</html>

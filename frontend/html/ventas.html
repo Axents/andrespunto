@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <link rel="stylesheet" href="/frontend/css/ventas.css">
+</head>
+<body>
+    <div class="Cprincipal">
+        <aside class="s">
+            <button onclick="location.href='caja.html'">corte de caja</button>
+            <button onclick="location.href='inventario.html'">inventario</button>
+            
+            <button onclick="location.href='reportes.html'">reportes</button>
+            <button onclick="location.href='usuarios.html'">usuarios</button>
+            <button onclick="location.href='configuracion.html'">configuracion</button>
+            <button onclick="location.href='index.html'">salir</button>
+        </aside>
+       
+        <div class="Cventas">
+            <div class="venta-form">
+                <h2>Realizar Nueva Venta</h2>
+                <div class="venta-inputs">
+                    <div class="fGru">
+                        <label for="codigoProducto">Ingresa el codigo de producto:</label>
+                        <input type="text" id="codigoProducto" name="codigoProducto">
+                    </div>
+                    <div class="fGru">
+                        <label for="cantidadProducto">Cantidad:</label>
+                        <input type="number" id="cantidadProducto" name="cantidadProducto">
+                    </div>
+                    <button class="primerB" type="button" onclick="agregarProductoALaVenta()">Agregar Producto</button>
+                </div>
+                
+                <table class="tablaProductos">
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Cantidad</th>
+                            <th>Unid</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaProductos"></tbody>
+                </table>
+
+                
+                <div class="totales">
+                    <p>sub: <span id="subtotal">$0.00</span></p>
+                    <p>iva: <span id="impuestos">$0.00</span></p>
+                    <p>total: <span id="total">$0.00</span></p>
+                </div>
+
+                
+               
+                <div class="metodoPago">
+                    <label for="metodoPago">Metodo de Pago:</label>
+                    <input type="number" id="dineroIngresado" placeholder="monto" required onchange="calcularCambio()">
+                    <select id="metodoPago" name="metodoPago">
+                        <option value="efectivo">Efectivo</option>
+                        <option value="tarjeta">Tarjeta</option>
+                        <option value="transferencia">Transferencia</option>
+                    </select>
+                </div>
+
+                <div class="cambio">
+
+                    <p>Cambio: <span id="cambio">$0.00</span></p>
+                </div>
+
+                <button id="finalizarVentaBtn" class="primerB" type="button" onclick="finalizarVenta()">Finalizar Venta y Generar Ticket</button>
+            </div>
+
+            <div class="imagenProductosC">
+                <h3>Imagen del Producto</h3>
+                <div class="imagenProducto">
+                    <img id="imagenProducto" src="" alt="Imagen del producto" style="display:none;">
+                </div>
+                <div id="detalleVenta" class="detalleVenta">
+                </div>
+            </div>
+
+            <div id="configuracionEmpresa">
+                <h3>Información de la Empresa</h3>
+                <p><strong>Nombre de la Empresa:</strong> <span id="nombreEmpresaSpan"></span></p>
+                <p><strong>Dirección:</strong> <span id="direccionEmpresaSpan"></span></p>
+                <p><strong>Teléfono:</strong> <span id="telefonoEmpresaSpan"></span></p>
+                <p><strong>Email:</strong> <span id="emailEmpresaSpan"></span></p>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/backend/rutas/ventas.js"></script>
+    
+
+    <script>
+        window.onload = function() {
+            const configuracion = JSON.parse(localStorage.getItem('configuracion'));
+            if (configuracion) {
+                document.getElementById('nombreEmpresaSpan').textContent = configuracion.nombreEmpresa || 'No disponible';
+                document.getElementById('direccionEmpresaSpan').textContent = configuracion.direccionEmpresa || 'No disponible';
+                document.getElementById('telefonoEmpresaSpan').textContent = configuracion.telefonoEmpresa || 'No disponible';
+                document.getElementById('emailEmpresaSpan').textContent = configuracion.emailEmpresa || 'No disponible';
+            }
+        };
+
+        d = document;
+        d.getElementById('codigoProducto').addEventListener('keypress',async function(e){
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                await verificarProducto(this.value);
+                this.value = ""; 
+            }
+        });
+
+        async function verificarProducto(codigo) {
+            const r = await fetch(`http://127.0.0.1:3000/api/productos/codigo/${codigo}`);
+            const prod = await r.json();
+            
+            console.log('producto: ', prod);
+
+            if (prod) {
+                const cantidad = parseFloat(d.getElementById('cantidadProducto').value || 1); 
+                agregarProductoADelista(prod, cantidad);
+            } else {
+                alert('no esta');
+            }
+        }
+
+        function agregarProductoADelista(prod2, cantidad) {
+            const listaProductos = d.getElementById('listaProductos');
+            const fila = d.createElement('tr');
+            const precio = parseFloat(prod2.precio); 
+
+        
+
+            const importe=precio*cantidad;
+
+            fila.innerHTML = `
+                <td>${prod2.codigo}</td>
+                <td>${cantidad}</td>
+                <td>Unid</td>
+                <td>${prod2.nombre}</td>
+                <td>$${precio.toFixed(2)}</td>
+                <td>$${importe.toFixed(2)}</td>
+            `;
+            listaProductos.appendChild(fila);
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            const filas = d.querySelectorAll('#listaProductos tr');
+            let subtotal = 0;
+
+            filas.forEach(fila => {
+                const importe = parseFloat(fila.cells[5].textContent.replace('$', ''));
+                subtotal += importe;
+            });
+
+            const impuestos = subtotal * 0.16;  
+            const total = subtotal + impuestos;
+
+            d.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            d.getElementById('impuestos').textContent = `$${impuestos.toFixed(2)}`;
+            d.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
