@@ -10,11 +10,16 @@
     <header>
         <h1>Gestión de Clientes</h1>
     </header>
-    <div class="clC">
+
+    <section>
         <h2>Registrar Nuevo Cliente</h2>
         <div class="form-group">
             <label for="nombreCliente">Nombre:</label>
             <input type="text" id="nombreCliente" name="nombreCliente">
+        </div>
+        <div class="form-group">
+            <label for="apellidosCliente">Apellidos:</label>
+            <input type="text" id="apellidosCliente" name="apellidosCliente">
         </div>
         <div class="form-group">
             <label for="telefonoCliente">Teléfono:</label>
@@ -24,13 +29,106 @@
             <label for="emailCliente">Email:</label>
             <input type="email" id="emailCliente" name="emailCliente">
         </div>
+        <div class="form-group">
+            <label for="direccionCliente">Dirección:</label>
+            <input type="text" id="direccionCliente" name="direccionCliente">
+        </div>
         <button onclick="guardarCliente()">Guardar Cliente</button>
-    </div>
+    </section>
+
+    <section>
+        <h2>Actualizar Cliente</h2>
+        <div class="form-group">
+            <label for="idClienteActualizar">ID Cliente:</label>
+            <input type="text" id="idClienteActualizar" name="idClienteActualizar">
+        </div>
+        <div class="form-group">
+            <label for="nombreClienteActualizar">Nombre:</label>
+            <input type="text" id="nombreClienteActualizar" name="nombreClienteActualizar">
+        </div>
+        <div class="form-group">
+            <label for="apellidosClienteActualizar">Apellidos:</label>
+            <input type="text" id="apellidosClienteActualizar" name="apellidosClienteActualizar">
+        </div>
+        <div class="form-group">
+            <label for="telefonoClienteActualizar">Teléfono:</label>
+            <input type="text" id="telefonoClienteActualizar" name="telefonoClienteActualizar">
+        </div>
+        <div class="form-group">
+            <label for="emailClienteActualizar">Email:</label>
+            <input type="email" id="emailClienteActualizar" name="emailClienteActualizar">
+        </div>
+        <div class="form-group">
+            <label for="direccionClienteActualizar">Dirección:</label>
+            <input type="text" id="direccionClienteActualizar" name="direccionClienteActualizar">
+        </div>
+        <button onclick="actualizarCliente()">Actualizar Cliente</button>
+    </section>
+
+    <section>
+        <h2>Eliminar Cliente</h2>
+        <div class="form-group">
+            <label for="idClienteEliminar">ID Cliente:</label>
+            <input type="text" id="idClienteEliminar" name="idClienteEliminar">
+        </div>
+        <button onclick="eliminarCliente()">Eliminar Cliente</button>
+    </section>
 
     <script>
-        function guardarCliente() {
-            alert("Cliente guardado correctamente");
+        async function guardarCliente() {
+            const nombre = document.getElementById("nombreCliente").value;
+            const apellidos = document.getElementById("apellidosCliente").value;
+            const telefono = document.getElementById("telefonoCliente").value;
+            const email = document.getElementById("emailCliente").value;
+            const direccion = document.getElementById("direccionCliente").value;
+
+            try {
+                const response = await fetch('http://127.0.0.1:3000/clientes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, apellidos, telefono, email, direccion })
+                });
+                const resultado = await response.json();
+                alert(resultado.message);
+            } catch (error) {
+                alert('error 5 ' + error.message);
+            }
+        }
+
+        async function actualizarCliente() {
+            const id = document.getElementById("idClienteActualizar").value;
+            const nombre = document.getElementById("nombreClienteActualizar").value;
+            const apellidos = document.getElementById("apellidosClienteActualizar").value;
+            const telefono = document.getElementById("telefonoClienteActualizar").value;
+            const email = document.getElementById("emailClienteActualizar").value;
+            const direccion = document.getElementById("direccionClienteActualizar").value;
+
+            try {
+                const response = await fetch(`http://127.0.0.1:3000/clientes/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, apellidos, telefono, email, direccion })
+                });
+                const resultado = await response.json();
+                alert(resultado.message);
+            } catch (error) {
+                alert('error 6 ' + error.message);
+            }
+        }
+
+        async function eliminarCliente() {
+            const id = document.getElementById("idClienteEliminar").value; 
+            try {
+                const response = await fetch(`http://127.0.0.1:3000/clientes/${id}`, {
+                    method: 'DELETE'
+                });
+                const resultado = await response.json();
+                alert(resultado.message);
+            } catch (error) {
+                alert('error 7 ' + error.message);
+            }
         }
     </script>
 </body>
 </html>
+

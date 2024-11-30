@@ -28,7 +28,7 @@ async function submitForm(event) {
     if (response.ok && !isRegistering) {
         if (data.role === 'admin') {
             localStorage.setItem('userRole',data.role);
-
+            localStorage.setItem('userId', data.userId); 
             window.location.href = 'ventas.html';
         } else {
 
@@ -39,6 +39,7 @@ async function submitForm(event) {
         }
     }
 }
+
 async function actualizarUsuario(userId) {
     const userRole = localStorage.getItem('userRole');
     if (userRole !== 'admin') {
@@ -156,3 +157,6 @@ function detras() {
     d.getElementById('form-message').textContent = isRegistering ? 'Puedes ingresar' : 'Crea la cuenta del administrador';
     d.getElementById('message').textContent = '';
 }
+
+//me quede en el punto 5 de classroom, ya tengo la vista, me falta implementar el html. de mi para mi
+

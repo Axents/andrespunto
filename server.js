@@ -12,6 +12,7 @@ dotenv.config();
 const ap= express();
 const puerto= process.env.PORT || 3001;
 const db= require('./backend/configuracion/base');
+const { error } = require('console');
 
 ap.use(cors());
 ap.use(bodyParser.json());
@@ -73,18 +74,20 @@ ap.put('/api/productos/:codigo', async (req, res) => {
     }
 });
 
+
 ap.post('/api/ventas', (req, res) => {
-    const { productos, fecha, subtotal, impuestos, total, metodoPago, dineroIngresado } = req.body;
+    const { productos, fecha, subtotal, impuestos, total, metodoPago, dineroIngresado,usuario_id } = req.body;
     const fechaFormateada = new Date(fecha).toISOString().slice(0, 19).replace('T', ' ');
     const cambio = dineroIngresado - total;
-
+    console.log('usuario_id recibido:', usuario_id);
+    
     db.beginTransaction((err) => {
         if (err) {
             return res.status(500).json({ error: 'Error al iniciar transacción' });
         }
 
-        const cVenta = 'insert into ventas2 (fecha, subtotal, impuestos, total, metodo_pago, dinero_ingresado, cambio) values (?, ?, ?, ?, ?, ?, ?)';
-        db.query(cVenta, [fechaFormateada, subtotal, impuestos, total, metodoPago, dineroIngresado, cambio], (err, result) => {
+        const cVenta = 'insert into ventas2 (fecha, subtotal, impuestos, total, metodo_pago, dinero_ingresado, cambio,usuario_id) values (?, ?, ?, ?, ?, ?, ?, ?)';
+        db.query(cVenta, [fechaFormateada, subtotal, impuestos, total, metodoPago, dineroIngresado, cambio, usuario_id], (err, result) => {
             if (err) {
                 return db.rollback(() => {
                     res.status(500).json({ error: 'Error al registrar la venta' });
@@ -328,6 +331,108 @@ ap.get('/api/ventas-por-periodo', (req, res) => {
     });
 });
 
+ap.post('/clientes', (req, res) => {
+    const { nombre, apellidos, telefono, email, direccion } = req.body;
+    const query = 'CALL insertar_cliente(?, ?, ?, ?, ?)';
+    db.query(query, [nombre, apellidos, telefono, email, direccion], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.status(201).send({ message: 'Cliente insertado correctamente', results });
+    });
+});
+
+ap.put('/clientes/:id', (req, res) => {
+    const { id } = req.params;
+    const { nombre, apellidos, telefono, email, direccion } = req.body;
+    const query = 'CALL actualizar_cliente(?, ?, ?, ?, ?, ?)';
+    db.query(query, [id, nombre, apellidos, telefono, email, direccion], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.status(200).send({ message: 'Cliente actualizado correctamente', results });
+    });
+});
+
+ap.delete('/clientes/:id', (req, res) => {
+    const { id }=req.params;
+    const query='call eliminar_cliente(?)';
+    db.query(query, [id], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.status(200).send({ message: 'cliente eliminado', results });
+    });
+});
+
+ap.post('/api/generar-ventas', (req, res) => {
+    const { cantidadVentas }=req.body;
+    if(!cantidadVentas || isNaN(cantidadVentas) || cantidadVentas<=0){
+        return res.status(400).json({error: 'numero valido'});
+
+    }
+    const query=`call insertar_ventas_aleatorias(?)`;
+    db.query(query, [cantidadVentas], (err, results) => {
+        if (err) {
+          console.error('error', err);
+          return res.status(500).json({ error: 'eror interno del servidor' });
+        }
+        res.status(200).json({ message: `${cantidadVentas} ventas generadas exitosamente.` });
+  });
+});
+
+ap.get('/reporteVentasMes/:mes', (req, res) => {
+    const mes = req.params.mes;
+
+    if (!mes || isNaN(mes) || mes<1 || mes>12) {
+        return res.status(400).json({ error: 'mes no existe' });
+    }
+
+    const query = `
+        select v.id AS idVenta, v.fecha, v.subtotal, v.impuestos,
+        v.total, v.metodo_pago, v.dinero_ingresado, v.cambio, d.producto_id,
+        d.cantidad, d.precio from ventas2 v
+        join detalle_ventas d on v.id = d.venta_id
+        where month(v.fecha) = ?;
+    `;
+
+    db.query(query, [mes], (err, results) => {
+        if (err) {
+            console.error('rror de consulta:', err);
+            return res.status(500).json({ error: 'error de  reporte' });
+        }
+        res.status(200).json(results);
+    });
+});
+
+
+ap.get('/reporte/:mes',(req,res)=>{
+    const mes=req.params.mes;
+    if(!mes || isNaN(mes) || mes<1 ||mes>12){
+        return res.status(400).json({error: 'error 1y 12'});
+    }
+    const c=`select * from reporteVentasMes where month(fecha)=?;`;
+    db.c(query,[mes],(err,results)=>{
+        if(err){
+            console.error('error de la vista',err);
+            return res.status(500).json({error: 'error de reporte'});
+
+        }
+        res.status(200).json(results);
+    });
+});
+
+ap.get('/reporteT',(req,res)=>{
+    
+    const c=`select p.nombre as producto, sum(case when month(v.fecha) between 1 and 3 then d.cantidad else 0 end) as trim_1,
+    sum(case when month(v.fecha) between 4 and 6 then d.cantidad else 0 end) as trim_2, sum(case when month(v.fecha) between 7 and 9 then d.cantidad else 0 end) as trim_3,
+    sum(case when month(v.fecha) between 10 and 12 then d.cantidad else 0 end) as trim_4
+    from detalle_ventas d join ventas2 v on v.id = d.venta2_id join
+    productos p on p.id = d.producto_id
+    where year(v.fecha)=2024 group by p.nombre;`;
+    db.query(c,(err,results)=>{
+        if(err){
+            console.error('error de la vista',err);
+            return res.status(500).json({error: 'error de reporte'});
+
+        }
+        res.status(200).json(results);
+    });
+});
 
 
 ap.listen(puerto, () => {

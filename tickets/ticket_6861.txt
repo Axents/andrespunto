@@ -1,0 +1,12 @@
+
+                            Venta id: 6861
+                            Fecha: 2024-11-28 01:15:53
+                            Mtodo de Pago: efectivo
+                            Subtotal: $20.00
+                            Impuestos: $3.20
+                            Total: $23.20
+                            Cambio: $6.80
+                            
+                            Detalle de productos:
+                            Coca cola | 1 | $20.00 = $20.00
+                            

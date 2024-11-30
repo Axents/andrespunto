@@ -1,0 +1,12 @@
+
+                            Venta id: 6986
+                            Fecha: 2024-11-29 19:57:09
+                            Mtodo de Pago: tarjeta
+                            Subtotal: $55.50
+                            Impuestos: $8.88
+                            Total: $64.38
+                            Cambio: $35.62
+                            
+                            Detalle de productos:
+                            arroz la villita | 3 | $18.50 = $55.50
+                            

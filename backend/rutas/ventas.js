@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 async function obtenerProducto(codigo) {
     try {
         const li1 = await fetch(`http://127.0.0.1:3000/api/productos/codigo/${codigo}`);
@@ -71,6 +73,7 @@ c = document;
 
 // pendienton la imagen
 c.getElementById('codigoProducto').addEventListener('change', async function () {
+    c=document;
     const producto = await obtenerProducto(this.value);
     const imagen = c.getElementById('imagenProducto');
     
@@ -91,8 +94,10 @@ c.getElementById('codigoProducto').addEventListener('change', async function () 
         imagen.style.display = 'none';
     }
 });
+
 let ventaRegistrada=false;
 async function registrarVenta() {
+    c=document;
     if (ventaRegistrada) {
         alert('La venta ya ha sido registrada. Finaliza y genera el ticket.');
         return;
@@ -102,6 +107,7 @@ async function registrarVenta() {
     const listaFilas = document.querySelectorAll('#listaProductos tr');
     const metodoPago = document.getElementById('metodoPago').value;
     const dineroIngresado = parseFloat(document.getElementById('dineroIngresado').value || 0);
+    
     
     if (isNaN(dineroIngresado) || dineroIngresado <= 0) {
         alert('Por favor ingresa un monto válido de dinero');
@@ -149,6 +155,17 @@ async function registrarVenta() {
     const total = subtotal + impuestos;
     const cambio = dineroIngresado - total; 
 
+    const usuarioId = localStorage.getItem('usuario_id'); 
+    console.log(usuarioId);
+    if (!usuarioId) {
+        console.error('No se encontró el usuario_id');
+        return;
+    }
+
+    if (!usuarioId) {
+        alert('No se ha encontrado el ID del usuario. Por favor inicia sesión.');
+        return;
+    }
     if (productosVendidos.length === 0) {
         alert('No hay productos válidos para registrar la venta');
         return;
@@ -162,7 +179,8 @@ async function registrarVenta() {
         total,
         metodoPago,
         dineroIngresado,
-        cambio
+        cambio,
+        usuario_id: usuarioId
     };
 
     try {
@@ -187,6 +205,7 @@ async function registrarVenta() {
 
 
 async function finalizarVenta() {
+    c = document;
     const metodoPago = c.getElementById('metodoPago').value;
     const dineroIngresado = parseFloat(c.getElementById('dineroIngresado').value);
 
@@ -289,6 +308,7 @@ async function finalizarVenta() {
 
 
 function mostrarDetalleVenta(ticketData) {
+    c=document;
     const detalleVentaDiv = c.getElementById('detalleVenta');
     const { ventaId, fecha, metodoPago, subtotal, impuestos, total, dineroIngresado, cambio, productos } = ticketData.ticket;
 
@@ -318,6 +338,7 @@ function mostrarDetalleVenta(ticketData) {
 
 
 function generarTicket(ticketData) {
+    c=document;
     const { ventaId, fecha, metodoPago, subtotal, impuestos, total, dineroIngresado, cambio, productos } = ticketData.ticket;
 
     const ticketHTML = `
@@ -358,6 +379,7 @@ function generarTicket(ticketData) {
 }
 
 async function agregarProductoALaVenta() {
+    c=document;
     const codigo = c.getElementById('codigoProducto').value;
     const cantidad = parseFloat(c.getElementById('cantidadProducto').value);
 
@@ -398,6 +420,7 @@ async function agregarProductoALaVenta() {
 }
 
 function mostrarEnTicket(producto, cantidad, precio, importe) {
+    c=document;
     const detalleVenta = c.getElementById('detalleVenta');
     const ticketProducto = c.createElement('p');
     ticketProducto.innerHTML = `
@@ -414,9 +437,63 @@ async function actualizarInventario(codigo, cantidadVendida) {
             body: JSON.stringify({ cantidad: cantidadVendida })
         });
         if (!response.ok) {
-            throw new Error('Error al actualizar el inventario');
+            throw new Error('error3');
         }
     } catch (error) {
-        console.error('Error actualizando inventario:', error);
+        console.error('error4', error);
     }
 }
+
+async function generarVentas() {
+    const cantidadVentas=document.getElementById('cantidadVentas').value;
+    if(!cantidadVentas || cantidadVentas<=0){
+        alert('cantidad valida');
+        return;
+    }
+    try {
+        const response = await fetch('http://127.0.0.1:3000/api/generar-ventas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cantidadVentas: parseInt(cantidadVentas) }),
+        });
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        console.error('error de la venta', error);
+        alert('error generar ventas');
+    }
+}
+
+function mostrarReporteTrimestral(reporte){
+    const tabla=document.getElementById('tablaReporteTrimestral').getElementsByTagName('tbody')[0];
+    tabla.innerHTML='';
+    reporte.forEach(fila=>{
+        const r=tabla.insertRow();
+        r.innerHTML=`
+            <td>${fila.producto || 'N/A'}</td>
+            <td>${fila.trim_1 || 0}</td>
+            <td>${fila.trim_2 || 0}</td>
+            <td>${fila.trim_3 || 0}</td>
+            <td>${fila.trim_4 || 0}</td>
+        `;
+    });
+
+}
+
+async function obtenerReporteTrimestral() {
+    try{
+        const r=await fetch('http://127.0.0.1:3000/reporteT');
+        const i=await r.json();
+        mostrarReporteTrimestral(i);
+
+    }catch (error){
+        console.error('erro',error);
+    }
+}
+document.addEventListener('DOMContentLoaded',obtenerReporteTrimestral);

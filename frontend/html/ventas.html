@@ -11,8 +11,9 @@
         <aside class="s">
             <button onclick="location.href='caja.html'">corte de caja</button>
             <button onclick="location.href='inventario.html'">inventario</button>
-            
+            <button onclick="location.href='clientes.html'">clientes</button>
             <button onclick="location.href='reportes.html'">reportes</button>
+            <button onclick="location.href='reportes2.html'">r2</button>
             <button onclick="location.href='usuarios.html'">usuarios</button>
             <button onclick="location.href='configuracion.html'">configuracion</button>
             <button onclick="location.href='index.html'">salir</button>
@@ -90,12 +91,19 @@
                 <p><strong>Teléfono:</strong> <span id="telefonoEmpresaSpan"></span></p>
                 <p><strong>Email:</strong> <span id="emailEmpresaSpan"></span></p>
             </div>
+
+            <div class="simular-ventas">
+                <h2>proceso de venta2</h2>
+                <label for="cantidadVentas">cantidade de ventas</label>
+                <input type="number" id="cantidadVentas" min="1" placeholder="0">
+                <button onclick="generarVentas()">Generar Ventas</button>
+            </div>
+            
         </div>
     </div>
     
-
     <script src="/backend/rutas/ventas.js"></script>
-    
+
 
     <script>
         window.onload = function() {

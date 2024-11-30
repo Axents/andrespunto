@@ -157,3 +157,42 @@ select {
     color: #4cff9a;
     margin-top: 10px;
 }
+
+.simular-ventas {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #161515;
+    background-color: #121111;
+    border-radius: 5px;
+}
+
+.simular-ventas h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.simular-ventas label {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.simular-ventas input {
+    padding: 5px;
+    font-size: 14px;
+    width: 80px;
+    margin-right: 10px;
+}
+
+.simular-ventas button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #0c0c0c;
+    background-color: #007bff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.simular-ventas button:hover {
+    background-color: #0056b3;
+}

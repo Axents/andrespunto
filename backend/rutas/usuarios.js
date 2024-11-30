@@ -48,9 +48,9 @@ router.delete('/:id',verificarAdmin, (req, res) => {
     });
 });
 router.put('/:id', verificarAdmin, async (req, res) => {
-    console.log(req.body); // Verifica los datos enviados
+    console.log(req.body); 
 
-    const { userRole, nombre, email, role_id } = req.body;
+    const { userRole, nombre, email, role_id} = req.body;
 
     if (userRole !== 'admin') {
         return res.status(403).json({ message: 'Solo admin puede realizar esta acción.' });
@@ -120,11 +120,12 @@ router.post('/inicio', (req, res) => {
         if (!match) {
             return res.status(400).json({ message: 'Contraseña incorrecta' });
         }
-
         res.json({
             message: 'Inicio de sesión exitoso',
-            role: usuario.role
+            role: usuario.role,
+            userId: usuario.id
         });
+
     });
 });
 
@@ -154,7 +155,6 @@ router.post('/registro', async (req, res) => {
         });
     });
 });
-
 router.get('/', (req, res) => {
     const query = `select u.id, u.nombre, r.nombre as role from usuarios u
         join roles r on u.role_id = r.id
@@ -167,7 +167,4 @@ router.get('/', (req, res) => {
         res.json(results);
     });
 });
-
-
-
 module.exports = router;

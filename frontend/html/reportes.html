@@ -23,6 +23,88 @@
             <button id="btnObtenerVentas">Obtener Reporte de Ventas</button>
         </div>
 
+        <div>
+            <h2>reporte por mes</h2>
+            <input type="number" id="mesInput" placeholder="ingresa de 1 a 12" />
+            <button onclick="obtenerReporteMensual()">Generar Reporte</button>
+        
+            <table id="tablaReporteVentas">
+                <thead>
+                    <tr>
+                        <th>id Venta</th>
+                        <th>fecha</th>
+                        <th>subtotal</th>
+                        <th>impuestod</th>
+                        <th>total</th>
+                        <th>metodo de Pago</th>
+                        <th>dinero ingresado</th>
+                        <th>cambio</th>
+                        <th>producto id</th>
+                        <th>cantidad</th>
+                        <th>precio</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        <script>
+            async function obtenerReporteMensual() {
+                const mes = document.getElementById('mesInput').value;
+                if (!mes || isNaN(mes) || mes < 1 || mes > 12) {
+                    alert('mes entre 1 y 12');
+                    return;
+                }
+        
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/reporteVentasMes/${mes}`);
+                    if (!response.ok) {
+                        throw new Error('error4');
+                    }
+                    const datos = await response.json();
+                    mostrarReporteMensual(datos);
+                } catch (error) {
+                    console.error('error5', error);
+                    alert('error 6');
+                }
+            }
+        
+            function mostrarReporteMensual(reporte) {
+    const tabla = document.getElementById('tablaReporteVentas').getElementsByTagName('tbody')[0];
+    tabla.innerHTML = '';
+
+    reporte.forEach(fila => {
+        const row=tabla.insertRow();
+        const idVenta=fila.idVenta || 'N/A';
+        const fecha=fila.fecha ? new Date(fila.fecha).toLocaleDateString() : 'N/A';
+        const subtotal=fila.subtotal ? parseFloat(fila.subtotal).toFixed(2) : 'N/A';
+        const impuestos=fila.impuestos ? parseFloat(fila.impuestos).toFixed(2) : 'N/A';
+        const total=fila.total ? parseFloat(fila.total).toFixed(2) : 'N/A';
+        const metodoPago=fila.metodo_pago || 'N/A';
+        const dineroIngresado=fila.dinero_ingresado ? parseFloat(fila.dinero_ingresado).toFixed(2) : 'N/A';
+        const cambio=fila.cambio ? parseFloat(fila.cambio).toFixed(2) : 'N/A';
+        const productoId=fila.producto_id || 'N/A';
+        const cantidad=fila.cantidad || 'N/A';
+        const precio=fila.precio ? parseFloat(fila.precio).toFixed(2) : 'N/A';
+
+        row.innerHTML = `
+            <td>${idVenta}</td>
+            <td>${fecha}</td>
+            <td>${subtotal}</td>
+            <td>${impuestos}</td>
+            <td>${total}</td>
+            <td>${metodoPago}</td>
+            <td>${dineroIngresado}</td>
+            <td>${cambio}</td>
+            <td>${productoId}</td>
+            <td>${cantidad}</td>
+            <td>${precio}</td>
+        `;
+    });
+}
+
+
+        </script>
         <table id="tablaReporteVentas">
             <thead>
                 <tr>
@@ -40,6 +122,8 @@
         <div id="contenedorTotal">
         </div>
     </div>
+
+    <script src="/backend/rutas/ventas.js"></script>
 
     <script>
         document.getElementById('btnObtenerVentas').addEventListener('click', async () => {
